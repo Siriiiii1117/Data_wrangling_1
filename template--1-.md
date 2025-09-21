@@ -16,6 +16,11 @@ library(tidyverse)
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
+``` r
+library(readxl)
+library(haven)
+```
+
 Let’s import a dataset!
 
 ``` r
@@ -146,3 +151,43 @@ pups_df=
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+pups_df = 
+  janitor::clean_names(pups_df)
+```
+
+## Okay, what about excel
+
+CSVs are really great, but sometimes we get an excel file
+
+``` r
+mlb_df = 
+  read_excel("data_import_examples/mlb11.xlsx")
+```
+
+Import LotR word counts.
+
+``` r
+fotr_df = 
+  read_excel("data_import_examples/LotR_Words.xlsx", range = "B3:D6")
+```
+
+## SAS?????
+
+import the Pulse data
+
+``` r
+pulse_df = 
+  read_sas("data_import_examples/public_pulse_data.sas7bdat")
+
+pulse_df =
+  janitor::clean_names(pulse_df)
+```
+
+## why I hate read.csv so much
+
+``` r
+litters_df_base =
+    read.csv("data_import_examples/FAS_litters.csv")
+```
