@@ -191,3 +191,9 @@ pulse_df =
 litters_df_base =
     read.csv("data_import_examples/FAS_litters.csv")
 ```
+
+## What about data exporting
+
+``` r
+write_csv(fotr_df, "data_import_examples/fotr_df.csv")
+```
