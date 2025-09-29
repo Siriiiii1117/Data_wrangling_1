@@ -130,3 +130,80 @@ filter(pups_df, pd_walk < 11, sex == 2)
 
 
 
+## `mutate`:
+
+use `mutate` to create or modify variables.
+
+```{r}
+mutate(
+  litters_df, 
+  wt_gain = gd18_weight - gd0_weight,
+  group = str_to_lower(group)
+)
+```
+
+
+## `arrange` :
+
+`arrange()` arranges things
+
+```{r}
+arrange(litters_df, pups_born_alive)
+arrange(litters_df, group, pups_born_alive)
+arrange(litters_df, desc(pups_born_alive))
+arrange(litters_df, gd0_weight)
+```
+
+## pipes:
+
+Let's see a bad way to code:
+
+```{r}
+litters_df =
+    read_csv("data_import_examples/FAS_litters.csv", na = c(".", "NA", ""))
+
+litters_df = 
+    janitor::clean_names(litters_df)
+
+litters_df = 
+    select(litters_df, group, litter_number, starts_with("gd"))
+
+litters_df = 
+    drop_na(litters_df)
+
+litters_df = 
+    mutate(
+    litters_df,
+    wt_gain = gd18_weight - gd0_weight
+    )
+```
+
+
+use pipes to avoid all this:
+
+```{r}
+litters_df = 
+  read_csv("data_import_examples/FAS_litters.csv", na = c("NA", ".", "")) |> 
+  janitor::clean_names() |> 
+  select(group, litter_number, starts_with("gd")) |> 
+  drop_na() |> 
+  mutate(
+    wt_gain = gd18_weight - gd0_weight
+  )
+```
+
+## Learning assessment 3:
+
+```{r}
+pups_df = 
+  read_csv("data_import_examples/FAS_pups.csv", skip = 3, na = c("NA", ".", "")) |> 
+  janitor::clean_names() |> 
+  filter(sex == 1) |> 
+  select(-pd_ears) |> 
+  mutate(
+    pd_pivot_ge7 = pd_pivot >= 7
+  )
+```
+
+
+
